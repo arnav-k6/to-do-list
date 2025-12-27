@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
+# layout
+
 
 class GUI:
     def __init__(self):
@@ -47,10 +49,19 @@ class GUI:
 
         # -----Dropdown menu function
 
-        self.menubutton = tk.Menubutton(
-            self.root, text="Commands", relief=tk.RAISED)
-        self.menubutton.grid()
-        self.menu = tk.Menu(self.menubutton)
+        def ask_exit():
+            exitbox = messagebox.askokcancel(
+                title="Exit", detail="Are you sure you want to exit?")
+            if (exitbox):
+                self.root.quit()
+            else:
+                return
+
+        menubar = tk.Menu(self.root)
+        file_menu = tk.Menu(menubar, tearoff=0)
+        file_menu.add_command(label="Exit", command=ask_exit)
+        menubar.add_cascade(label="Commands", menu=file_menu)
+        self.root.config(menu=menubar)
         # ---debugging list to test deletion and list filling
         # for i in range(100):
         # self.tasklist.insert(i, f"Task"+f"{i}")
